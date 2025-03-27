@@ -1,0 +1,53 @@
+iogengine : libaio
+direct : 1
+iterations : 3
+file_size : 1G
+runtime : "5"
+group_reporting : 1
+fio_iops_pos: 7
+fio_slat_pos_start : 9
+fio_clat_pos_start : 13
+fio_lat_pos_start : 37
+fio_type_offset : 0
+columns :
+  - iotype
+  - bs
+  - njobs
+  - iodepth
+  - iops
+  - slatmin
+  - slatmax
+  - slatavg
+  - clatmin
+  - clatmax
+  - clatavg
+  - latmin
+  - latmax
+  - latavg
+job :
+  - write
+  - randwrite
+  - read
+  - randread
+blocksize:
+  - "512"
+  - 1k
+  - 4k
+  - 512k
+numjobs:
+  - 1
+  - 32
+  - 64
+iodepth:
+  - 1
+  - 8
+  - 32
+  - 64
+  - 128
+
+
+
+
+
+
+

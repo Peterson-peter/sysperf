@@ -1,0 +1,15 @@
+lspci -vv -nn
+ - grab link speed
+
+Need to:
+add a hardware report
+validate that each disk is connected at the right link speed.
+install eBPF from source NOT from libbpf-tools
+  missing output to json switch in the older libbpf-tools version 
+Collect output from eBPF: 
+  biolatency
+  bitesize
+  ext4dist
+push the output off the box
+roll this in to a custom boot image to run at pxe boot
+
