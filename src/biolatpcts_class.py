@@ -1,5 +1,4 @@
-from __future__ import print_function
-from bcc import BPF
+from bcc import BCC
 from time import sleep
 from threading import Event
 import json
