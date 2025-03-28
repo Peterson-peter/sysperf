@@ -4,6 +4,7 @@ iterations : 3
 file_size : 1G
 runtime : "5"
 group_reporting : 1
+output-format : json
 fio_iops_pos: 7
 fio_slat_pos_start : 9
 fio_clat_pos_start : 13

@@ -2,6 +2,9 @@ import os
 import time
 import subprocess
 import yaml
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -20,10 +23,9 @@ class fio:
         rel_path = "models/fio.yaml"
         abs_file_path = os.path.join(location, rel_path)
         with open(abs_file_path) as f:
-            print("opening " + abs_file_path)
+            logger.info("opening " + abs_file_path)
             settings  = yaml.safe_load(f)
         self._settings = settings
-        print(settings["iogengine"])
     
     def run(self, device: str):
         """
@@ -53,10 +55,12 @@ class fio:
                         --numjobs="+str(numjobs)+" \
                         --time_based \
                         --runtime="+self._settings["runtime"]+" \
-                        --group_reporting"
-
+                        --group_reporting"+" \
+                        --output-format=" + self._settings["output-format"]
+                        
+                        logger.info("Running command: " + command)
                         for iterations in range (0, self._settings["iterations"]):
-                            time.sleep(10) #allow any previous runs to cleanup
-                            output = subprocess.check_output(command, shell=True)
-
-                            iops = iops + float(output)
+                            time.sleep(2) #allow any previous runs to cleanup
+                            output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+                            print(output)
+                            #iops = iops + float(output)
