@@ -78,8 +78,7 @@ class biolatpcts:
                 return 0;
         }
         """
-        pcts = self._percentiles.split(',')
-        pcts.sort(key=lambda x: float(x))
+        self._percentiles.sort(key=lambda x: float(x))
         stat = os.stat('/dev/' + self._deivce)
         major = os.major(stat.st_rdev)
         minor = os.minor(stat.st_rdev)
