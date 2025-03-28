@@ -89,12 +89,12 @@ class biolatpcts:
         bpf_source = bpf_source.replace('__MINOR__', str(minor))
 
     def run(self):
-        if BPF.kernel_struct_has_field(b'request', b'rq_disk') == 1:
+        if BCC.kernel_struct_has_field(b'request', b'rq_disk') == 1:
             bpf_source = bpf_source.replace('__RQ_DISK__', 'rq_disk')
         else:
             bpf_source = bpf_source.replace('__RQ_DISK__', 'q->disk')
 
-        bpf = BPF(text=bpf_source)
+        bpf = BCC(text=bpf_source)
         cur_rwdf_100ms = bpf["rwdf_100ms"]
         cur_rwdf_1ms = bpf["rwdf_1ms"]
         cur_rwdf_10us = bpf["rwdf_10us"]
