@@ -46,18 +46,19 @@ class fio:
                         str(iodepth) + ";" 
 
                         command = "sudo fio --minimal -name=temp-fio \
---bs="+str(blocksize)+" \
---ioengine=libaio \
---iodepth="+str(iodepth)+" \
---size="+self._settings["file_size"]+" \
---direct=1 \
---rw="+str(job)+" \
---filename=/dev/"+str(device)+" \
---numjobs="+str(numjobs)+" \
---time_based \
---runtime="+self._settings["runtime"]+" \
---group_reporting"+" \
---output-format=" + self._settings["output-format"]
+                        --bs="+str(blocksize)+" \
+                        --ioengine=libaio \
+                        --iodepth="+str(iodepth)+" \
+                        --size="+self._settings["file_size"]+" \
+                        --direct=1 \
+                        --rw="+str(job)+" \
+                        --filename=/dev/"+str(device)+" \
+                        --numjobs="+str(numjobs)+" \
+                        --time_based \
+                        --runtime="+self._settings["runtime"]+" \
+                        --group_reporting"+" \
+                        --output-format=" + self._settings["output-format"] + "\
+                        --output=/tmp/fio_output.json"
                         
                         logger.info("Running command: " + command)
                         for iterations in range (0, self._settings["iterations"]):
