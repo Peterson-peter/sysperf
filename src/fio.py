@@ -57,5 +57,7 @@ class fio:
                         for iterations in range (0, self._settings["iterations"]):
                             time.sleep(2) #allow any previous runs to cleanup && kill logging
                             output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+                            output = output.encode('utf-8')
+                            
                             print(output)
                             #iops = iops + float(output)
