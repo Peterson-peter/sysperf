@@ -39,12 +39,6 @@ class fio:
                 for numjobs in self._settings["numjobs"]:
                     for iodepth in self._settings["iodepth"]:
 
-                        result = "" + \
-                        str(job) + ";" + \
-                        str(blocksize) + ";" + \
-                        str(numjobs) + ";" + \
-                        str(iodepth) + ";" 
-
                         command = "sudo fio --minimal -name=temp-fio \
                         --bs="+str(blocksize)+" \
                         --ioengine=libaio \
@@ -57,9 +51,8 @@ class fio:
                         --time_based \
                         --runtime="+self._settings["runtime"]+" \
                         --group_reporting"+" \
-                        --output-format=" + self._settings["output-format"] + "\
-                        --output=/tmp/fio_output.json"
-                        
+                        --output-format=" + self._settings["output-format"]
+
                         logger.info("Running command: " + command)
                         for iterations in range (0, self._settings["iterations"]):
                             time.sleep(2) #allow any previous runs to cleanup && kill logging
