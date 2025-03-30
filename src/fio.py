@@ -34,6 +34,7 @@ class fio:
 
         """
         for job in self._settings["job"]:
+            #call the logger here for kernel traces kick off into the background
             for blocksize in self._settings["blocksize"]:
                 for numjobs in self._settings["numjobs"]:
                     for iodepth in self._settings["iodepth"]:
@@ -45,22 +46,22 @@ class fio:
                         str(iodepth) + ";" 
 
                         command = "sudo fio --minimal -name=temp-fio \
-                        --bs="+str(blocksize)+" \
-                        --ioengine=libaio \
-                        --iodepth="+str(iodepth)+" \
-                        --size="+self._settings["file_size"]+" \
-                        --direct=1 \
-                        --rw="+str(job)+" \
-                        --filename=/dev/"+str(device)+" \
-                        --numjobs="+str(numjobs)+" \
-                        --time_based \
-                        --runtime="+self._settings["runtime"]+" \
-                        --group_reporting"+" \
-                        --output-format=" + self._settings["output-format"]
+--bs="+str(blocksize)+" \
+--ioengine=libaio \
+--iodepth="+str(iodepth)+" \
+--size="+self._settings["file_size"]+" \
+--direct=1 \
+--rw="+str(job)+" \
+--filename=/dev/"+str(device)+" \
+--numjobs="+str(numjobs)+" \
+--time_based \
+--runtime="+self._settings["runtime"]+" \
+--group_reporting"+" \
+--output-format=" + self._settings["output-format"]
                         
                         logger.info("Running command: " + command)
                         for iterations in range (0, self._settings["iterations"]):
-                            time.sleep(2) #allow any previous runs to cleanup
+                            time.sleep(2) #allow any previous runs to cleanup && kill logging
                             output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
                             print(output)
                             #iops = iops + float(output)
