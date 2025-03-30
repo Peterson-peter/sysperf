@@ -2,7 +2,6 @@ lspci -vv -nn
  - grab link speed
 
 Need to:
-add boilerplate for deployment
 parse output of fio
 integrate bcc into this project 
 likely need to change to more of async 
