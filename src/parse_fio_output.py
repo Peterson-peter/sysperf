@@ -33,7 +33,7 @@ def parse_output(output: list) -> dict:
 
     #fill the values that we want
     for interation in output:
-        interation = interation.decode('utf-8')
+        interation = interation[0].decode('utf-8')
         interation = json.loads(interation)
         read_iops += interation["jobs"][0]['read']['iops']
         read_iops_min += interation['jobs'][0]['read']['iops_min']
