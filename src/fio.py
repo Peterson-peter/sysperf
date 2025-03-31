@@ -66,10 +66,10 @@ class fio:
                         average_ouput = parse_output(report)
                         #Create the output file name
                         file_name = "/tmp/" + \
-                            self._settings["job"] + "_" + \
-                            self._settings["blocksize"] + "_" + \
-                            self._settings["numjobs"] + "_" + \
-                            self._settings["iodepth"] + "_" + \
+                            job + "_" + \
+                            blocksize + "_" + \
+                            numjobs + "_" + \
+                            iodepth + "_" + \
                             "fio_ouput.json"
                         with open(file_name, "w" ) as f:
                             f.write(json.dumps(average_ouput, indent=4))
