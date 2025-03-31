@@ -30,3 +30,6 @@ into graphing utilities.
 
 requirements
 FIO needs to be installed prior to first run.
+
+future:
+task to be completed are listed in the notes.
