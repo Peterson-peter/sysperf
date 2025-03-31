@@ -1,3 +1,4 @@
+from .parse_fio_output import parse_output
 import os
 import time
 import subprocess
@@ -5,10 +6,7 @@ import yaml
 import logging
 import json
 
-from parse_fio_output import parse_output
-
 logger = logging.getLogger(__name__)
-
 
 
 class fio:
@@ -64,8 +62,9 @@ class fio:
                             output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
                             output = output.decode('utf-8')
                             output = json.loads(output)
-                            report[iterations] = output
+                            report.append(output)
                         average_ouput = parse_output(report)
+                        #Create the output file name
                         file_name = "/tmp/" + \
                             self._settings["job"] + "_" + \
                             self._settings["blocksize"] + "_" + \
