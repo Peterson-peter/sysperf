@@ -3,6 +3,9 @@ import time
 import subprocess
 import yaml
 import logging
+import json
+
+from parse_fio_output import parse_output
 
 logger = logging.getLogger(__name__)
 
@@ -33,6 +36,7 @@ class fio:
         by default it will run 240 jobs.
 
         """
+        report = []
         for job in self._settings["job"]:
             #call the logger here for kernel traces kick off into the background
             for blocksize in self._settings["blocksize"]:
@@ -57,7 +61,8 @@ class fio:
                         for iterations in range (0, self._settings["iterations"]):
                             time.sleep(2) #allow any previous runs to cleanup && kill logging
                             output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
-                            output = output.encode('utf-8')
+                            output = output.decode('utf-8')
+                            output = json.loads(output)
+                            report[iterations] = output
+                        parse_output(report)
                             
-                            print(output)
-                            #iops = iops + float(output)
