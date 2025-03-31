@@ -59,10 +59,20 @@ class fio:
 
                         logger.info("Running command: " + command)
                         for iterations in range (0, self._settings["iterations"]):
-                            time.sleep(2) #allow any previous runs to cleanup && kill logging
+                            time.sleep(2) #allow any previous runs to cleanup 
+                            #kill traces 
                             output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
                             output = output.decode('utf-8')
                             output = json.loads(output)
                             report[iterations] = output
-                        parse_output(report)
+                        average_ouput = parse_output(report)
+                        file_name = "/tmp/" + \
+                            self._settings["job"] + "_" + \
+                            self._settings["blocksize"] + "_" + \
+                            self._settings["numjobs"] + "_" + \
+                            self._settings["iodepth"] + "_" + \
+                            "fio_ouput.json"
+                        with open(file_name, "w" ) as f:
+                            f.write(json.dumps(average_ouput, indent=4))
+                            
                             
