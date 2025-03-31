@@ -1,20 +1,15 @@
-lspci -vv -nn
- - grab link speed
+
 
 Need to:
-parse output of fio
-integrate bcc into this project 
-likely need to change to more of async 
 add a hardware report
-validate that each disk is connected at the right link speed.
-Find the installed filesystem 
-update bbc commands with the block size that is runing
-install eBPF from source NOT from libbpf-tools
-  missing output to json switch in the older libbpf-tools version 
-Collect output from eBPF: 
-  ./biolatpcts.py /dev/nvme0n1
-  ./biolatency.py -j
+  lspci -vv -nn
+    - grab link speed
+  validate that each disk is connected at the right link speed.
+  roll this in to a custom boot image to run at pxe boot
+
+Future:
+  Find the installed filesystem 
   ./ext4slower -j 1
-push the output off the box
-roll this in to a custom boot image to run at pxe boot
+  push the output off the box
+
 

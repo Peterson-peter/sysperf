@@ -25,6 +25,7 @@ class fio:
         abs_file_path = os.path.join(location, rel_path)
         with open(abs_file_path) as f:
             logger.info("opening " + abs_file_path)
+            logger.debug("loading yaml file")
             settings  = yaml.safe_load(f)
         self._settings = settings
     
@@ -35,12 +36,26 @@ class fio:
 
         """
         report = []
+        logger.info("Starting the loops based on fio.yaml")
         for job in self._settings["job"]:
-            #call the logger here for kernel traces kick off into the background
             for blocksize in self._settings["blocksize"]:
                 for numjobs in self._settings["numjobs"]:
                     for iodepth in self._settings["iodepth"]:
+                        #create the file saving template
+                        file_names = "/tmp/" + \
+                            str(job) + "_" + \
+                            str(blocksize) + "_" + \
+                            str(numjobs) + "_" + \
+                            str(iodepth) + "_"
 
+                        biolatency_file = file_names + "biolatency.json"
+                        command = "./bin/biolatency-bpfcc 1 -j > " + biolatency_file
+                        logger.info("starting Biolatency in a different processes") 
+                        biolatency = subprocess.Popen(command)
+                        biolatpcts_file = file_names + "biolatpcts.json"
+                        command = "./bin/biolatpcts-bpfcc /dev/" + device + " -j > " + biolatpcts_file
+                        logger.info("starting Biolatpcts in a different processes")
+                        biolatpcts = subprocess.Popen(command)
                         command = "sudo fio --minimal -name=temp-fio \
                         --bs="+str(blocksize)+" \
                         --ioengine=libaio \
@@ -58,20 +73,19 @@ class fio:
                         logger.info("Running command: " + command)
                         for iterations in range (0, self._settings["iterations"]):
                             time.sleep(2) #allow any previous runs to cleanup 
-                            #kill traces 
                             output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
                             output = output.decode('utf-8')
                             output = json.loads(output)
+                            logger.info("Adding iteration")
                             report.append(output)
+                        logger.info("Terminating the eBPF processes")
+                        biolatency.terminate()
+                        biolatpcts.terminate()
                         average_ouput = parse_output(report)
                         #Create the output file name
-                        file_name = "/tmp/" + \
-                            str(job) + "_" + \
-                            str(blocksize) + "_" + \
-                            str(numjobs) + "_" + \
-                            str(iodepth) + "_" + \
-                            "fio_ouput.json"
-                        with open(file_name, "w" ) as f:
+                        fio_file_name = file_names + "fio_ouput.json"
+                        with open(fio_file_name, "w" ) as f:
+                            logger.info("writing output")
                             f.write(json.dumps(average_ouput, indent=4))
                             
                             
