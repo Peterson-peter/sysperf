@@ -53,15 +53,15 @@ class fio:
                         abs_file_path = os.path.join(self._location, rel_path)
                         command = abs_file_path + " > " + biolatency_file
                         logger.info("starting Biolatency in a different processes") 
-                        biolatency = subprocess.Popen(command)
+                        biolatency = subprocess.Popen(command, shell=True)
 
                         biolatpcts_file = file_names + "biolatpcts.json"
                         rel_path = "bin/biolatpcts-bpfcc /dev/" + device + " -j "
                         abs_file_path = os.path.join(self._location, rel_path)
                         command = abs_file_path + " > " + biolatpcts_file
-                        
+
                         logger.info("starting Biolatpcts in a different processes")
-                        biolatpcts = subprocess.Popen(command)
+                        biolatpcts = subprocess.Popen(command, shell=True)
                         command = "sudo fio --minimal -name=temp-fio \
                         --bs="+str(blocksize)+" \
                         --ioengine=libaio \
