@@ -4,32 +4,32 @@ import json
 
 def parse_output(output: list) -> dict:
     #specifcy the values that we want
-    read_iops : int
-    read_iops_min : int
-    read_iops_max : int
+    read_iops : int = 0 
+    read_iops_min : int = 0 
+    read_iops_max : int = 0 
     #Completion latency (clat) Submission to the kernel and when the IO is complete.
-    read_clat_ns_min : int
-    read_clat_ns_max : int
-    read_clat_ns_mean : float
+    read_clat_ns_min : int = 0 
+    read_clat_ns_max : int = 0
+    read_clat_ns_mean : float = 0.0
     #Submission latency (slat) how long did it take to submit this IO to the kernel for processing
-    read_slat_ns_min : int
-    read_slat_ns_max : int
-    read_slat_ns_mean : float
-    read_lat_ns_min : int
-    read_lat_ns_max : int
-    read_lat_ns_mean : float
-    write_iops : int
-    write_iops_min : int
-    write_iops_max : int
-    write_clat_ns_min : int
-    write_clat_ns_max : int
-    write_clat_ns_mean : int
-    write_slat_ns_min : int
-    write_slat_ns_max : int
-    write_slat_ns_mean : float
-    write_lat_ns_min : int
-    write_lat_ns_max : int
-    write_lat_ns_mean : float
+    read_slat_ns_min : int = 0
+    read_slat_ns_max : int = 0
+    read_slat_ns_mean : float = 0.0
+    read_lat_ns_min : int = 0
+    read_lat_ns_max : int = 0
+    read_lat_ns_mean : float = 0.0
+    write_iops : int = 0
+    write_iops_min : int = 0
+    write_iops_max : int = 0
+    write_clat_ns_min : int = 0
+    write_clat_ns_max : int = 0
+    write_clat_ns_mean : int = 0
+    write_slat_ns_min : int = 0
+    write_slat_ns_max : int = 0
+    write_slat_ns_mean : float = 0.0
+    write_lat_ns_min : int = 0
+    write_lat_ns_max : int = 0
+    write_lat_ns_mean : float = 0.0
 
     #fill the values that we want
     for interation in output:
