@@ -20,9 +20,9 @@ class fio:
         """
         init loads the fio settings from a file
         """
-        location = os.path.dirname(__file__)
+        self._location = os.path.dirname(__file__)
         rel_path = "models/fio.yaml"
-        abs_file_path = os.path.join(location, rel_path)
+        abs_file_path = os.path.join(self._location, rel_path)
         with open(abs_file_path) as f:
             logger.info("opening " + abs_file_path)
             logger.debug("loading yaml file")
@@ -49,11 +49,17 @@ class fio:
                             str(iodepth) + "_"
 
                         biolatency_file = file_names + "biolatency.json"
-                        command = "./bin/biolatency-bpfcc 1 -j > " + biolatency_file
+                        rel_path = "bin/biolatency-bpfcc 1 -j"
+                        abs_file_path = os.path.join(self._location, rel_path)
+                        command = abs_file_path + " > " + biolatency_file
                         logger.info("starting Biolatency in a different processes") 
                         biolatency = subprocess.Popen(command)
+
                         biolatpcts_file = file_names + "biolatpcts.json"
-                        command = "./bin/biolatpcts-bpfcc /dev/" + device + " -j > " + biolatpcts_file
+                        rel_path = "bin/biolatpcts-bpfcc /dev/" + device + " -j "
+                        abs_file_path = os.path.join(self._location, rel_path)
+                        command = abs_file_path + " > " + biolatpcts_file
+                        
                         logger.info("starting Biolatpcts in a different processes")
                         biolatpcts = subprocess.Popen(command)
                         command = "sudo fio --minimal -name=temp-fio \

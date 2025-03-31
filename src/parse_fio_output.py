@@ -1,5 +1,8 @@
 import json
-
+"""
+This picks out the parts of fio that are deemed important and assembles an object to returns
+the average of the iterations to give an answer that elimiates outliers. 
+"""
 
 
 def parse_output(output: list) -> dict:
