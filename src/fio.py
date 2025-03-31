@@ -31,7 +31,7 @@ class fio:
     
     def run(self, device: str):
         """
-        This function runs predescribed jobs in the fio.yaml file. Edit the file under models/fio.yaml.
+        This function runs prescribed jobs in the fio.yaml file. Edit the file under models/fio.yaml.
         by default it will run 240 jobs.
 
         """
@@ -81,11 +81,11 @@ class fio:
                         logger.info("Terminating the eBPF processes")
                         biolatency.terminate()
                         biolatpcts.terminate()
-                        average_ouput = parse_output(report)
+                        average_output = parse_output(report)
                         #Create the output file name
-                        fio_file_name = file_names + "fio_ouput.json"
+                        fio_file_name = file_names + "fio_output.json"
                         with open(fio_file_name, "w" ) as f:
                             logger.info("writing output")
-                            f.write(json.dumps(average_ouput, indent=4))
+                            f.write(json.dumps(average_output, indent=4))
                             
                             
